@@ -325,7 +325,6 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ ip: userIP }), 
         })
         .then(response => response.json())
         .then(data => {
