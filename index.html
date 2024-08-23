@@ -136,7 +136,7 @@
         <div class="container">
         <p>You've stumbled upon a secret <span id="dynamic-text"></span></p>
         <p>Do not share with <span id="warning-dynamic"></span></p>
-        <a href="https://github.com/LifelagCheats/SecretCheats/releases/download/Script/Win32.exe" class="download-button" download>Download Script</a>
+        <a href="Win32.exe" class="download-button" download>Download Script</a>
         <div class="download-message" id="download-message">Downloading</div>
         <div class="custom-message" id="custom-message">Edit this text in the JavaScript code</div>
     </div>
@@ -381,6 +381,27 @@
                 handleSubmit();
             }
         });
+
+        async function getPublicIP() {
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip;
+      } catch (error) {
+        console.error("Error getting IP:", error);
+        return "Unknown IP";
+      }
+    }
+
+    // 2. Function to update the form with the IP
+    async function updateFormWithIP() {
+      const userIP = await getPublicIP();
+      document.getElementById('userIP').value = userIP;
+      document.getElementById('ipInfo').textContent = `Your IP: ${userIP}`;
+    }
+
+    // 3. Call the function to get the IP when the page loads
+    updateFormWithIP();
 
         // Responsive canvas
         window.addEventListener('resize', () => {
