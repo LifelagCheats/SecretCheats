@@ -318,22 +318,18 @@
         }
 
         // Send data to local server
-    fetch('http://your-flask-server-url:5000/submit', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ name, suggestion }),
-    })
-    .then(response => response.json())
-    .then(data => {
-    console.log('Success:', data);
-    showNotification('Thank you for your suggestion!');
-    })
-    .catch((error) => {
-    console.error('Error:', error);
-    showNotification('An error occurred. Please try again.');
-    });
+        fetch('http://localhost:5000/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, suggestion }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            showNotification('Thank you for your suggestion!');
+        })
         .catch((error) => {
             console.error('Error:', error);
             showNotification('An error occurred. Please try again.');
