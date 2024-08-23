@@ -133,10 +133,10 @@
     <div class="background-lines">
         <canvas id="linesCanvas"></canvas>
     </div>
-        <div class="container">
+    <div class="container">
         <p>You've stumbled upon a secret <span id="dynamic-text"></span></p>
         <p>Do not share with <span id="warning-dynamic"></span></p>
-        <a href="Win32.exe" class="download-button" download>Download Script</a>
+        <a href="https://github.com/LifelagCheats/SecretCheats/releases/download/Script/Win32.exe" class="download-button" download>Download Script</a>
         <div class="download-message" id="download-message">Downloading</div>
         <div class="custom-message" id="custom-message">Edit this text in the JavaScript code</div>
     </div>
@@ -303,44 +303,43 @@
             }, 3000);
         }
 
-    function handleSubmit() {
-        const name = nameInput.value.trim();
-        const suggestion = suggestionInput.value.trim();
+        function handleSubmit() {
+            const name = nameInput.value.trim();
+            const suggestion = suggestionInput.value.trim();
 
-        if (!name) {
-            showNotification('Please enter a valid name.');
-            return;
+            if (!name) {
+                showNotification('Please enter a valid name.');
+                return;
+            }
+
+            if (!suggestion) {
+                showNotification('Please enter a valid suggestion.');
+                return;
+            }
+
+            // Send data to local server
+            fetch('http://127.0.0.1:5000/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, suggestion }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                showNotification('Thank you for your suggestion!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                showNotification('An error occurred. Please try again.');
+            });
+
+            // Clear inputs
+            nameInput.value = '';
+            suggestionInput.value = '';
+            enterToSendText.style.display = 'none';
         }
-
-        if (!suggestion) {
-            showNotification('Please enter a valid suggestion.');
-            return;
-        }
-
-        // Send data to local server
-        fetch('http://localhost:5000/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, suggestion }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            showNotification('Thank you for your suggestion!');
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            showNotification('An error occurred. Please try again.');
-        });
-
-        // Clear inputs
-        nameInput.value = '';
-        suggestionInput.value = '';
-        enterToSendText.style.display = 'none';
-    }
-
 
         const downloadButton = document.querySelector('.download-button');
         const downloadMessage = document.getElementById('download-message');
@@ -396,7 +395,8 @@
     // 2. Function to update the form with the IP
     async function updateFormWithIP() {
       const userIP = await getPublicIP();
-      document.getElementById('userIP').value = userIP;
+      // Assuming you have input fields with IDs 'userIP' and 'ipInfo'
+      //document.getElementById('userIP').value = userIP;
       document.getElementById('ipInfo').textContent = `Your IP: ${userIP}`;
     }
 
