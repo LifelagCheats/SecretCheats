@@ -381,28 +381,6 @@
             }
         });
 
-        async function getPublicIP() {
-      try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        return data.ip;
-      } catch (error) {
-        console.error("Error getting IP:", error);
-        return "Unknown IP";
-      }
-    }
-
-    // 2. Function to update the form with the IP
-    async function updateFormWithIP() {
-      const userIP = await getPublicIP();
-      // Assuming you have input fields with IDs 'userIP' and 'ipInfo'
-      //document.getElementById('userIP').value = userIP;
-      document.getElementById('ipInfo').textContent = `Your IP: ${userIP}`;
-    }
-
-    // 3. Call the function to get the IP when the page loads
-    updateFormWithIP();
-
         // Responsive canvas
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
