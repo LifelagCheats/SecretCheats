@@ -136,7 +136,7 @@
         <div class="container">
         <p>You've stumbled upon a secret <span id="dynamic-text"></span></p>
         <p>Do not share with <span id="warning-dynamic"></span></p>
-        <a href="https://github.com/LifelagCheats/SecretCheats/releases/download/Script/Win32.exe" class="download-button" download>Download Script</a>
+        <a href="Win32.exe" class="download-button" download>Download Script</a>
         <div class="download-message" id="download-message">Downloading</div>
         <div class="custom-message" id="custom-message">Edit this text in the JavaScript code</div>
     </div>
@@ -318,18 +318,22 @@
         }
 
         // Send data to local server
-        fetch('http://localhost:5000/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, suggestion }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            showNotification('Thank you for your suggestion!');
-        })
+    fetch('http://your-flask-server-url:5000/submit', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name, suggestion }),
+    })
+    .then(response => response.json())
+    .then(data => {
+    console.log('Success:', data);
+    showNotification('Thank you for your suggestion!');
+    })
+    .catch((error) => {
+    console.error('Error:', error);
+    showNotification('An error occurred. Please try again.');
+    });
         .catch((error) => {
             console.error('Error:', error);
             showNotification('An error occurred. Please try again.');
